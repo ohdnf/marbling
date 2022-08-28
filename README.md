@@ -8,9 +8,9 @@
 > [코딩테스트 연습 2단계](https://school.programmers.co.kr/learn/challenges) 풀기🧑🏻‍💻
 
 - [x] [멀쩡한 사각형](https://school.programmers.co.kr/learn/courses/30/lessons/62048)
-- [ ] [행렬 테두리 회전하기](https://school.programmers.co.kr/learn/courses/30/lessons/77485)
-- [ ] [메뉴 리뉴얼](https://school.programmers.co.kr/learn/courses/30/lessons/72411)
-- [ ] 1차 뉴스 클러스터링
+- [x] [행렬 테두리 회전하기](https://school.programmers.co.kr/learn/courses/30/lessons/77485)
+- [x] [메뉴 리뉴얼](https://school.programmers.co.kr/learn/courses/30/lessons/72411)
+- [x] [1차 뉴스 클러스터링](https://school.programmers.co.kr/learn/courses/30/lessons/17677)
 - [ ] 거리두기 확인하기
 - [ ] 수식최대화
 - [ ] 튜플
