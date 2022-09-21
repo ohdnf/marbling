@@ -11,7 +11,7 @@
 - [x] [행렬 테두리 회전하기](https://school.programmers.co.kr/learn/courses/30/lessons/77485)
 - [x] [메뉴 리뉴얼](https://school.programmers.co.kr/learn/courses/30/lessons/72411)
 - [x] [1차 뉴스 클러스터링](https://school.programmers.co.kr/learn/courses/30/lessons/17677)
-- [ ] [거리두기 확인하기]*(https://school.programmers.co.kr/learn/courses/30/lessons/81302)
+- [ ] [거리두기 확인하기](https://school.programmers.co.kr/learn/courses/30/lessons/81302)
 - [ ] 수식최대화
 - [ ] 튜플
 - [ ] 빛의경로사이클
