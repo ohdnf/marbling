@@ -1,80 +1,69 @@
 let maxNum = 0;
+const priorityList = [
+  ['*', '+', '-'],
+  ['*', '-', '+'],
+  ['+', '*', '-'],
+  ['+', '-', '*'],
+  ['-', '*', '+'],
+  ['-', '+', '*'],
+];
 
 function solution(expression) {
-  const originNumbers = expression
-    .split(/[*|+|-]/)
-    .map((number) => Number(number));
-  const originOperations = expression.replace(/[0-9]/g, '').split('');
+  const expressionList = makeExpressionList(expression);
 
-  const numbersOperations = originNumbers.reduce((acc, current, idx) => {
-    acc.push(current, originOperations[idx]);
-    return acc;
-  }, []);
-  numbersOperations.pop();
+  for (let arithmeticList of priorityList) {
+    calc(arithmeticList, expressionList);
+  }
 
-  const uniqueArr = makeUniqueArr(originOperations);
-  const N = uniqueArr.length;
-  const selected = new Array(N).fill(0);
-  const copy = new Array(N).fill(0);
-
-  permutation(0, uniqueArr, selected, copy, N, numbersOperations);
   return maxNum;
 }
 
-const makeUniqueArr = (duplicateArr) => {
-  let uniqueArr = [];
-  duplicateArr.forEach((element) => {
-    if (!uniqueArr.includes(element)) {
-      uniqueArr.push(element);
+const makeExpressionList = (originString) => {
+  const exp = ['*', '+', '-'];
+  let res = [];
+  let string = '';
+  for (let i = 0; i < originString.length; i++) {
+    if (exp.includes(originString[i])) {
+      res = [...res, Number(string), originString[i]];
+      string = '';
+    } else {
+      string += originString[i];
     }
-  });
+  }
+  res.push(Number(string));
 
-  return uniqueArr;
+  return res;
 };
 
-const permutation = (idx, arr, selected, copy, N, originNumbersOperations) => {
-  if (idx === N) {
-    let numbersOperations = [...originNumbersOperations];
-    for (let c of copy) {
-      let result = [];
-      for (let i = 0; i < numbersOperations.length; i++) {
-        result.push(numbersOperations[i]);
+const calc = (arithmeticList, expressionList) => {
+  for (let arithmetic of arithmeticList) {
+    let nextExpressionList = [];
+    for (let i = 0; i < expressionList.length; i++) {
+      nextExpressionList.push(expressionList[i]);
 
-        if (numbersOperations[i] === c) {
-          result.pop();
-          let beforeValue = result.pop();
+      if (expressionList[i] === arithmetic) {
+        nextExpressionList.pop();
+        let beforeValue = nextExpressionList.pop();
 
-          let calc = 0;
-          switch (c) {
-            case '+':
-              calc = beforeValue + numbersOperations[i + 1];
-              break;
-            case '-':
-              calc = beforeValue - numbersOperations[i + 1];
-              break;
-            case '*':
-              calc = beforeValue * numbersOperations[i + 1];
-              break;
-          }
-
-          i += 1;
-          result.push(calc);
+        let calc = 0;
+        switch (arithmetic) {
+          case '+':
+            calc = beforeValue + expressionList[i + 1];
+            break;
+          case '-':
+            calc = beforeValue - expressionList[i + 1];
+            break;
+          case '*':
+            calc = beforeValue * expressionList[i + 1];
+            break;
         }
-      }
-      numbersOperations = [...result];
 
-      if (result.length === 1) {
-        maxNum = Math.abs(result[0]) > maxNum ? Math.abs(result[0]) : maxNum;
+        i += 1;
+        nextExpressionList.push(calc);
       }
     }
-    return;
+    expressionList = [...nextExpressionList];
   }
-  for (let i = 0; i < N; i++) {
-    if (selected[i] === 0) {
-      selected[i] = 1;
-      copy[idx] = arr[i];
-      permutation(idx + 1, arr, selected, copy, N, originNumbersOperations);
-      selected[i] = 0;
-    }
-  }
+  const result = Math.abs(expressionList[0]);
+  maxNum = result > maxNum ? result : maxNum;
 };
