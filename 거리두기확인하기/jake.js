@@ -1,70 +1,60 @@
-const moveArr = [
+const directionArr = [
   [-1, 0],
   [1, 0],
   [0, 1],
   [0, -1],
 ];
+let place = [];
 
 function solution(places) {
   let answer = [];
-
-  for (place of places) {
-    answer.push(checkIsOk(place));
+  for (let arr of places) {
+    place = arr;
+    answer.push(checkPlaceIsFulfilled());
   }
 
   return answer;
 }
 
-const checkIsOk = (place) => {
+const checkPlaceIsFulfilled = () => {
   for (let x = 0; x < 5; x++) {
     for (let y = 0; y < 5; y++) {
       if (place[x][y] === 'P') {
-        if (check(x, y, place) === false) return 0;
+        if (moveAndCheck(x, y, 0, 0, 1) === false) return 0;
       }
     }
   }
   return 1;
 };
 
-const check = (x, y, place) => {
-  for (let i = 0; i < moveArr.length; i++) {
-    const [moveX, moveY] = moveArr[i];
-    const afterMoveX = x + moveX;
-    const afterMoveY = y + moveY;
+const moveAndCheck = (
+  currentX,
+  currentY,
+  beforeDirectionX,
+  beforeDirectionY,
+  depth
+) => {
+  if (depth === 3) return true;
 
-    if (afterMoveX < 0 || afterMoveX > 4) {
-      continue;
-    } else if (afterMoveY < 0 || afterMoveY > 4) {
-      continue;
-    }
+  for (let i = 0; i < directionArr.length; i++) {
+    const [directionX, directionY] = directionArr[i];
+    const afterX = currentX + directionX;
+    const afterY = currentY + directionY;
 
-    const currentValue = place[afterMoveX][afterMoveY];
+    if (afterX < 0 || afterX > 4 || afterY < 0 || afterY > 4) continue; // 배열 범위를 넘어가면 continue
 
+    const currentValue = place[afterX][afterY];
+
+    if (directionX === -beforeDirectionX && directionY === -beforeDirectionY)
+      continue; // 직전 위치로는 안 감
     if (currentValue === 'P') return false;
     if (currentValue === 'X') continue;
-    if (check2(afterMoveX, afterMoveY, moveX, moveY, place) === false) {
+
+    if (
+      moveAndCheck(afterX, afterY, directionX, directionY, depth + 1) === false
+    ) {
       return false;
     }
-  }
-  return true;
-};
-
-const check2 = (x, y, beforeMoveX, beforeMoveY, place) => {
-  for (let i = 0; i < moveArr.length; i++) {
-    const [moveX, moveY] = moveArr[i];
-    const afterMoveX = x + moveX;
-    const afterMoveY = y + moveY;
-
-    if (afterMoveX < 0 || afterMoveX > 4) {
-      continue;
-    } else if (afterMoveY < 0 || afterMoveY > 4) {
-      continue;
-    }
-
-    const currentValue = place[afterMoveX][afterMoveY];
-
-    if (moveX === -beforeMoveX && moveY === -beforeMoveY) continue;
-    if (currentValue === 'P') return false;
   }
   return true;
 };
