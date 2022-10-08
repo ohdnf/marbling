@@ -12,8 +12,8 @@
 - [x] [메뉴 리뉴얼](https://school.programmers.co.kr/learn/courses/30/lessons/72411)
 - [x] [1차 뉴스 클러스터링](https://school.programmers.co.kr/learn/courses/30/lessons/17677)
 - [x] [거리두기 확인하기](https://school.programmers.co.kr/learn/courses/30/lessons/81302)
-- [ ] [수식 최대화](https://school.programmers.co.kr/learn/courses/30/lessons/67257)
-- [ ] 튜플
+- [x] [수식 최대화](https://school.programmers.co.kr/learn/courses/30/lessons/67257)
+- [ ] 튜플(https://school.programmers.co.kr/learn/courses/30/lessons/64065)
 - [ ] 빛의경로사이클
 - [ ] 조이스틱
 - [ ] 게임 맵 최단거리
