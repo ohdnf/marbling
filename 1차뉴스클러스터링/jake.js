@@ -1,12 +1,10 @@
 const MULTIPLE = 65536;
 function solution(str1, str2) {
   const [str1Arr, str2Arr] = [makeArr(str1), makeArr(str2)];
-
   if ((str1Arr.length === 0) & (str2Arr.length === 0)) return MULTIPLE;
 
-  const unionArr = makeUnionArr(str1Arr, str2Arr);
-
-  const intersectionArr = makeIntersectionArr(str1Arr, str2Arr);
+  const unionArr = makeUnionArr([...str1Arr], str2Arr);
+  const intersectionArr = makeIntersectionArr([...str1Arr], str2Arr);
 
   return Math.floor((intersectionArr.length / unionArr.length) * MULTIPLE);
 }
@@ -17,9 +15,9 @@ const makeArr = (str) => {
   const numLetterReg = /[0-9]/gi;
 
   for (let i = 0; i < str.length - 1; i++) {
-    const first = str[i].toLowerCase();
-    const second = str[i + 1].toLowerCase();
-    const res = (first + second)
+    const firstStr = str[i].toLowerCase();
+    const secondStr = str[i + 1].toLowerCase();
+    const res = (firstStr + secondStr)
       .replace(specialLetterReg, "")
       .replace(numLetterReg, "");
 
@@ -32,32 +30,30 @@ const makeArr = (str) => {
 };
 
 const makeUnionArr = (firstArr, secondArr) => {
-  const copyArr1 = [...firstArr];
   const resArr = [...firstArr];
 
   for (let second of secondArr) {
-    if (!copyArr1.includes(second)) {
-      resArr.push(second);
-    } else {
-      const idx = copyArr1.indexOf(second);
+    if (firstArr.includes(second)) {
+      const idx = firstArr.indexOf(second);
       if (idx > -1) {
-        copyArr1.splice(idx, 1);
+        firstArr.splice(idx, 1);
       }
+    } else {
+      resArr.push(second);
     }
   }
   return resArr;
 };
 
 const makeIntersectionArr = (firstArr, secondArr) => {
-  const copyArr1 = [...firstArr];
   const resArr = [];
 
   for (let second of secondArr) {
-    if (copyArr1.includes(second)) {
+    if (firstArr.includes(second)) {
       resArr.push(second);
-      const idx = copyArr1.indexOf(second);
+      const idx = firstArr.indexOf(second);
       if (idx > -1) {
-        copyArr1.splice(idx, 1);
+        firstArr.splice(idx, 1);
       }
     }
   }
